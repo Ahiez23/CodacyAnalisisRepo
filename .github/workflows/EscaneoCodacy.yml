@@ -1,0 +1,18 @@
+name: Codacy Analysis
+
+on:
+  push:
+    branches: [ PreProd ]  # Reemplazar 'main' con su rama principal
+
+jobs:
+  codacy:
+    runs-on: ubuntu-latest  # Sistema operativo donde se ejecuta el análisis
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Codacy Analysis
+        uses: codacy/codacy-action@v2
+        with:
+          project_token: ${{ secrets.79208d6130ff4e24bb09a75eeab57918 }}
+          fail_build: false  # Opcional: Falla la compilación si hay errores
