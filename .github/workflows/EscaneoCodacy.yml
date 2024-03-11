@@ -19,7 +19,7 @@ jobs:
         run: curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/download/7.9.8/codacy-analysis-cli-assembly-7.9.8.jar -o codacy-analysis-cli.jar
 
       - name: Run Codacy Analysis and Save Report
-        run: java -jar codacy-analysis-cli.jar analyze --partial --json > codacy-analysis-report.json
+        run: java -jar codacy-analysis-cli.jar analyze --json > codacy-analysis-report.json
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v4
