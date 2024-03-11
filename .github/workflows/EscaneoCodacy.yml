@@ -1,0 +1,37 @@
+name: Codacy Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - PreProd
+
+jobs:
+  codacy:
+    name: Run Codacy Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Codacy Analysis CLI
+        run: curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/download/4.3.0/codacy-analysis-cli-4.3.0-assembly.jar -o codacy-analysis-cli.jar
+
+      - name: Run Codacy Analysis
+        run: java -jar codacy-analysis-cli.jar analyze --partial --verbose
+
+      - name: Save Codacy Analysis Report
+        run: java -jar codacy-analysis-cli.jar analyze --json > codacy-analysis-report.json
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update Codacy Analysis Report"
+          files: |
+            codacy-analysis-report.json
+
+      - name: Push Changes to Repository
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
