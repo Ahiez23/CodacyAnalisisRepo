@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - PreProd
 
 jobs:
   codacy-scan:
@@ -14,7 +15,7 @@ jobs:
 
       - name: Install Codacy CLI
         run: |
-          curl -sL https://download.codacy.com/cli/latest/linux/x86_64/codacy | sudo tee /usr/local/bin/codacy
+         curl -sL https://download.codacy.com/cli/latest/linux/x86_64/codacy | sudo tee /usr/local/bin/codacy
 
       - name: Codacy Scan
         run: codacy analyze --format text -o results.txt
@@ -24,6 +25,5 @@ jobs:
         with:
           name: codacy-results
           path: results.txt
-
     env:
-      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      CODACY_PROJECT_TOKEN: a0a44540520143c0b40577fe10430e41
