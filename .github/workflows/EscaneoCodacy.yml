@@ -22,7 +22,7 @@ jobs:
         run: java -jar codacy-analysis-cli.jar analyze --tool deadcode --format text > ./resultado_analisis.txt
       
       - name: Subir archivo de análisis a GitHub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-file@v3
         with:
           name: Análisis Codacy
           path: ./resultado_analisis.txt
