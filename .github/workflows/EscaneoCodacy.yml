@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Codacy CLI
         run: |
-         curl -sL https://download.codacy.com/cli/latest/linux/x86_64/codacy | sudo tee /usr/local/bin/codacy
+          curl -sL https://download.codacy.com/cli/latest/linux/x86_64/codacy | chmod +x /usr/local/bin/codacy
 
       - name: Codacy Scan
         run: codacy analyze --format text -o results.txt
