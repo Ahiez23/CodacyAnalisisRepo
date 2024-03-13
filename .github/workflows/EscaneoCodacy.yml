@@ -1,28 +1,29 @@
-name: Codacy Analysis
+name: Codacy Scan
 
 on:
   push:
     branches:
       - main
-      - master
-      - PreProd
-      
+
 jobs:
-  codacy:
-    name: Run Codacy Analysis
+  codacy-scan:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Install Codacy Analysis CLI
-        run: curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/download/7.9.7/codacy-analysis-cli-assembly-7.9.7.jar -o codacy-analysis-cli.jar
+      - name: Install Codacy CLI
+        run: |
+          curl -sL https://download.codacy.com/cli/latest/linux/x86_64/codacy | sudo tee /usr/local/bin/codacy
 
-      - name: Ejecutar análisis Codacy y guardar salida
-        run: java -jar codacy-analysis-cli.jar analyze --tool Clang-Tidy --format json > ./resultado_analisis.json
-      
-      - name: Subir archivo de análisis a GitHub
+      - name: Codacy Scan
+        run: codacy analyze --format text -o results.txt
+
+      - name: Upload results
         uses: actions/upload-artifact@v3
         with:
-          name: Análisis Codacy
-          path: ./resultado_analisis.json
+          name: codacy-results
+          path: results.txt
+
+    env:
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
