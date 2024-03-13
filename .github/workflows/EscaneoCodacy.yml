@@ -26,4 +26,4 @@ jobs:
           name: codacy-results
           path: results.txt
     env:
-      CODACY_PROJECT_TOKEN: a0a44540520143c0b40577fe10430e41
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
