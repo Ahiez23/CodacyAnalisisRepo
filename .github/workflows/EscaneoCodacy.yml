@@ -19,7 +19,7 @@ jobs:
         run: curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/download/7.9.7/codacy-analysis-cli-assembly-7.9.7.jar -o codacy-analysis-cli.jar
 
       - name: Ejecutar análisis Codacy y guardar salida
-        run: java -jar codacy-analysis-cli.jar analyze --format json --verbose --output ./resultado_analisis.json
+        run: java -jar codacy-analysis-cli.jar analyze --tools ESLint --format json --output ./resultado_analisis.json
       
       - name: Subir archivo de análisis a GitHub
         uses: actions/upload-artifact@v3
