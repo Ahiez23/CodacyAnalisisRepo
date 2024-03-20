@@ -1,0 +1,25 @@
+name: Pull Request Approval
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v1
+        with:
+          server_address: "smtp.office365.com"
+          server_port: 587
+          username: "soporte@bigwavedata.mx"
+          password: "R9WqPdzwbLCns9U58wnX"
+          to: "ahiezer.gonzalez@bigwavedata.mx"
+          subject: "Pull Request Approval Needed"
+          body: "A new Pull Request has been opened. Please review and approve it."
+
+          
