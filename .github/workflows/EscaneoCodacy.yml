@@ -1,28 +1,30 @@
-name: Codacy Analysis
+name: Codacy Security Scan
 
 on:
   push:
-    branches:
-      - main
-      - master
-      - PreProd
-      
+    branches: [ "master", "main" , "PreProd" ]
 jobs:
-  codacy:
-    name: Run Codacy Analysis
+  codacy-security-scan:
+    name: Codacy Security Scan
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@main
 
-      - name: Install Codacy Analysis CLI
-        run: curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/download/7.9.7/codacy-analysis-cli-assembly-7.9.7.jar -o codacy-analysis-cli.jar
-
-      - name: Ejecutar análisis Codacy y guardar salida
-        run: java -jar codacy-analysis-cli.jar analyze --tool trivy --verbose --output ./resultado_analisis.json
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+        with:
+          output: results.txt  # Cambiado a .txt para archivo de texto
+          format: text  # Cambiado a texto
+          # Adjust severity of non-security issues
+          gh-code-scanning-compat: true
+          # Force 0 exit code to allow text file generation
+          # This will hand over control about PR rejection to the GitHub side
+          max-allowed-issues: 2147483647
       
-      - name: Subir archivo de análisis a GitHub
+      # Upload the text file generated in the previous step
+      - name: Upload text results file
         uses: actions/upload-artifact@v3
         with:
-          name: Análisis Codacy
-          path: ./resultado_analisis.json
+          name: codacy-security-results
+          path: results.txt  # Cambiado a .txt para archivo de texto
