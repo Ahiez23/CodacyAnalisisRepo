@@ -14,8 +14,8 @@ jobs:
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
         with:
-          output: results.txt  # Cambiado a .txt para archivo de texto
-          format: text  # Cambiado a texto
+          output: results.json  # Cambiado a .txt para archivo de texto
+          format: json  # Cambiado a texto
           # Adjust severity of non-security issues
           gh-code-scanning-compat: true
           # Force 0 exit code to allow text file generation
@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: codacy-security-results
-          path: results.txt  # Cambiado a .txt para archivo de texto
+          path: results.json  # Archivo
